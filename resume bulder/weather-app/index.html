@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="weather-container glass">
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h1 class="title" style="margin-bottom: 0;">Weather App</h1>
+            <div class="toggle-container" style="display: flex; background: rgba(255,255,255,0.2); border-radius: 20px; overflow: hidden; cursor: pointer;" id="unit-toggle" title="Toggle °C / °F">
+                <span id="celsius-btn" class="unit active" style="padding: 5px 10px; font-weight: 600; font-size: 14px; background: #fff; color: #1e3c72; transition: all 0.3s;">°C</span>
+                <span id="fahrenheit-btn" class="unit" style="padding: 5px 10px; font-weight: 600; font-size: 14px; color: #fff; transition: all 0.3s;">°F</span>
+            </div>
+        </header>
+
+        <div class="tabs" style="display: flex; margin-bottom: 20px; border-radius: 15px; overflow: hidden; background: rgba(0,0,0,0.2);">
+            <button id="tab-weather" style="flex: 1; padding: 10px; border: none; background: rgba(255,255,255,0.2); color: #fff; font-weight: 600; cursor: pointer; transition: 0.3s;">City Weather</button>
+            <button id="tab-drive" style="flex: 1; padding: 10px; border: none; background: transparent; color: #fff; font-weight: 600; cursor: pointer; transition: 0.3s;">Drive Planner</button>
+        </div>
+        
+        <div class="search-box" id="weather-search-box">
+            <input type="text" id="city-input" placeholder="Search City (e.g. Hyderabad)">
+            <button id="location-btn" title="Use My Location">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm0-136a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"></path></svg>
+            </button>
+            <button id="search-btn" title="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+            </button>
+        </div>
+
+        <div class="drive-box" id="drive-search-box" style="display: none; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+            <input type="text" id="origin-input" placeholder="From (e.g. Hyderabad)" style="width: 100%; padding: 12px 20px; border-radius: 20px; border: none; background: rgba(255,255,255,0.2); color: #fff; outline: none;">
+            <input type="text" id="dest-input" placeholder="To (e.g. Bangalore)" style="width: 100%; padding: 12px 20px; border-radius: 20px; border: none; background: rgba(255,255,255,0.2); color: #fff; outline: none;">
+            <button id="plan-drive-btn" style="width: 100%; padding: 12px; border-radius: 20px; border: none; background: #fff; color: #1e3c72; font-weight: 700; cursor: pointer;">Check Route Safety</button>
+        </div>
+
+        <div class="drive-results" id="drive-results" style="display: none; background: rgba(0,0,0,0.3); border-radius: 20px; padding: 20px; text-align: center;">
+            <h3 style="margin-bottom: 10px; color: #fff;">Route Assessment</h3>
+            <p id="drive-distance" style="font-size: 14px; margin-bottom: 5px; color: rgba(255,255,255,0.8);">Distance: -- km</p>
+            <p id="drive-duration" style="font-size: 14px; margin-bottom: 15px; color: rgba(255,255,255,0.8);">Est. Time: -- hrs</p>
+            <div id="drive-safety-card" style="padding: 15px; border-radius: 15px; background: #2ecc71; transition: 0.3s;">
+                <h4 id="drive-status" style="font-size: 20px; font-weight: 700; margin-bottom: 5px; color: #fff;">Safe to Drive!</h4>
+                <p id="drive-reason" style="font-size: 14px; color: rgba(255,255,255,0.9);">Conditions look good.</p>
+            </div>
+        </div>
+
+
+        <div class="error-message" id="error-message">City not found. Try again.</div>
+
+        <div class="weather-info" id="weather-info">
+            <div class="weather-icon-wrapper">
+                <img id="weather-icon" src="" alt="Weather Icon" />
+            </div>
+            <h2 id="temperature">--°C</h2>
+            <h3 id="city-name">--</h3>
+            <p id="weather-condition">--</p>
+            
+            <div class="weather-details">
+                <div class="detail">
+                    <span class="label">Humidity</span>
+                    <span class="value" id="humidity">--%</span>
+                </div>
+                <div class="detail">
+                    <span class="label">Wind</span>
+                    <span class="value" id="wind-speed">-- km/h</span>
+                </div>
+                <div class="detail">
+                    <span class="label">AQI (Air Quality)</span>
+                    <span class="value" id="aqi">--</span>
+                </div>
+                <div class="detail">
+                    <span class="label">UV Index</span>
+                    <span class="value" id="uv-index">--</span>
+                </div>
+                <div class="detail" style="grid-column: span 2;">
+                    <span class="label">Atmospheric Pressure</span>
+                    <span class="value" id="pressure">-- hPa</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
