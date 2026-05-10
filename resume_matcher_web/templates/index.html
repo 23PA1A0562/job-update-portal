@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Keyword Matcher</title>
+    <!-- Use Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>AI Resume Matcher</h1>
+            <p>Optimize your resume for ATS systems. Compare it instantly against any job description.</p>
+        </header>
+
+        <main>
+            <form id="matcher-form" class="glass-panel">
+                <div class="split-layout">
+                    <!-- Left Side: Resume Input -->
+                    <div class="input-section">
+                        <h2>1. Upload Resume</h2>
+                        <p class="subtitle">Upload your PDF or TXT file, or paste your resume text below.</p>
+                        
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="resume_file" name="resume_file" accept=".pdf,.txt" class="file-input">
+                            <label for="resume_file" class="file-label">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <span id="file-name">Choose a file or drag it here</span>
+                            </label>
+                        </div>
+                        
+                        <div class="divider"><span>OR</span></div>
+                        
+                        <textarea id="resume_text" name="resume_text" placeholder="Paste your resume text here..."></textarea>
+                    </div>
+
+                    <!-- Right Side: Job Description -->
+                    <div class="input-section">
+                        <h2>2. Job Description</h2>
+                        <p class="subtitle">Paste the full job description you are applying for.</p>
+                        
+                        <textarea id="job_description" name="job_description" required placeholder="Paste the job description here..."></textarea>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" id="analyze-btn">
+                        <span>Analyze Match</span>
+                        <div class="loader" id="btn-loader"></div>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Results Section -->
+            <div id="results-section" class="glass-panel hidden">
+                <div class="results-header">
+                    <h2>Match Results</h2>
+                    <div id="verdict-badge" class="badge"></div>
+                </div>
+                
+                <div class="results-grid">
+                    <!-- Score Card -->
+                    <div class="score-card">
+                        <h3>Match Score</h3>
+                        <div class="circular-progress" id="score-circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress" id="score-path" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="score-value" id="score-text">0%</div>
+                        </div>
+                    </div>
+
+                    <!-- Keywords Info -->
+                    <div class="keywords-card">
+                        <div class="keyword-group">
+                            <div class="group-header">
+                                <h3>Missing Keywords</h3>
+                                <span class="count-badge error" id="missing-count">0</span>
+                            </div>
+                            <p class="help-text">Add these to your resume to improve your ATS score.</p>
+                            <div class="tags-container" id="missing-tags">
+                                <!-- Tags injected via JS -->
+                            </div>
+                        </div>
+
+                        <div class="keyword-group mt-4">
+                            <div class="group-header">
+                                <h3>Matched Keywords</h3>
+                                <span class="count-badge success" id="matched-count">0</span>
+                            </div>
+                            <div class="tags-container" id="matched-tags">
+                                <!-- Tags injected via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="error-message" class="error-toast hidden"></div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
