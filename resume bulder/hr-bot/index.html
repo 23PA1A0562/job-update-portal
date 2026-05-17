@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Bot Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-robot"></i>
+                <span>HR Bot</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-target="dashboard"><i class="fa-solid fa-chart-pie"></i> Overview</a>
+                <a href="#" class="nav-item" data-target="leaves"><i class="fa-solid fa-calendar-alt"></i> Leave Management</a>
+                <a href="#" class="nav-item" data-target="it-services"><i class="fa-solid fa-laptop"></i> IT Services</a>
+                <a href="#" class="nav-item" data-target="performance"><i class="fa-solid fa-star"></i> Performance</a>
+            </nav>
+
+            <div class="hr-contact-widget">
+                <h4><i class="fa-solid fa-headset"></i> HR Support</h4>
+                <p class="hr-name">Ramu (HR Manager)</p>
+                <a href="mailto:ramu@company.com" class="hr-link"><i class="fa-solid fa-envelope"></i> ramu@company.com</a>
+                <a href="tel:+1234567890" class="hr-link"><i class="fa-solid fa-phone"></i> +1 (234) 567-890</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 id="page-title">Overview</h1>
+                </div>
+                <div class="header-right">
+                    <div class="employee-selector">
+                        <label for="employee-select">Viewing as:</label>
+                        <select id="employee-select">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div class="user-profile-mini">
+                        <img id="header-avatar" src="" alt="Profile">
+                        <span id="header-name">Loading...</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="welcome-banner">
+                    <div>
+                        <h2>Welcome back, <span id="welcome-name"></span>!</h2>
+                        <p>Here's what's happening with your HR profile today.</p>
+                    </div>
+                    <img src="https://illustrations.popsy.co/amber/freelancer.svg" alt="Welcome Illustration" class="welcome-img">
+                </div>
+                
+                <div class="grid-container">
+                    <div class="card profile-card">
+                        <h3><i class="fa-solid fa-id-badge"></i> Profile Details</h3>
+                        <div class="profile-info">
+                            <img id="profile-avatar" src="" alt="Profile Avatar" class="profile-avatar-large">
+                            <div>
+                                <h4 id="profile-name"></h4>
+                                <p id="profile-role" class="role-text"></p>
+                                <p><strong>ID:</strong> <span id="profile-id"></span> &nbsp; • &nbsp; <span id="profile-gender"></span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card credentials-card">
+                        <h3><i class="fa-solid fa-wifi"></i> Office Credentials</h3>
+                        <div class="credential-box">
+                            <p><strong>Wi-Fi Network:</strong></p>
+                            <div class="copy-field">
+                                <span id="wifi-network"></span>
+                            </div>
+                        </div>
+                        <div class="credential-box">
+                            <p><strong>Wi-Fi Password:</strong></p>
+                            <div class="copy-field">
+                                <span id="wifi-password" class="blurred"></span>
+                                <button id="toggle-password" class="icon-btn"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leave Management Section -->
+            <section id="leaves" class="content-section">
+                <div class="grid-container leaves-grid">
+                    <div class="card balance-card">
+                        <h3><i class="fa-solid fa-scale-balanced"></i> Leave Balance</h3>
+                        <div class="balance-circles">
+                            <div class="circle-container">
+                                <svg class="progress-ring" height="120" width="120">
+                                    <circle class="progress-ring__circle" stroke="#e2e8f0" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                                    <circle id="paid-progress" class="progress-ring__circle indicator paid" stroke="#3b82f6" stroke-width="8" fill="transparent" r="52" cx="60" cy="60" stroke-dasharray="326.72" stroke-dashoffset="0"/>
+                                </svg>
+                                <div class="circle-text">
+                                    <span id="paid-balance" class="balance-num">20</span>
+                                    <span class="balance-label">Paid Leaves</span>
+                                </div>
+                            </div>
+                            <div class="circle-container">
+                                <svg class="progress-ring" height="120" width="120">
+                                    <circle class="progress-ring__circle" stroke="#e2e8f0" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                                    <circle id="casual-progress" class="progress-ring__circle indicator casual" stroke="#10b981" stroke-width="8" fill="transparent" r="52" cx="60" cy="60" stroke-dasharray="326.72" stroke-dashoffset="0"/>
+                                </svg>
+                                <div class="circle-text">
+                                    <span id="casual-balance" class="balance-num">10</span>
+                                    <span class="balance-label">Casual Leaves</span>
+                                </div>
+                            </div>
+                            
+                            <div class="circle-container" id="maternity-balance-container" style="display: none;">
+                                <svg class="progress-ring" height="120" width="120">
+                                    <circle class="progress-ring__circle" stroke="#e2e8f0" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                                    <circle id="maternity-progress" class="progress-ring__circle indicator maternity" stroke="#ec4899" stroke-width="8" fill="transparent" r="52" cx="60" cy="60" stroke-dasharray="326.72" stroke-dashoffset="0"/>
+                                </svg>
+                                <div class="circle-text">
+                                    <span id="maternity-balance" class="balance-num">0</span>
+                                    <span class="balance-label">Maternity</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card apply-card">
+                        <h3><i class="fa-solid fa-paper-plane"></i> Apply for Leave</h3>
+                        <form id="leave-form">
+                            <div class="form-group">
+                                <label for="leave-type">Leave Type</label>
+                                <select id="leave-type" required>
+                                    <option value="">Select...</option>
+                                    <option value="paid">Paid Leave</option>
+                                    <option value="casual">Casual Leave</option>
+                                    <option value="maternity" id="maternity-option" style="display: none;">Maternity Leave</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="leave-days">Number of Days <span class="required">*</span></label>
+                                <input type="number" id="leave-days" min="1" required>
+                            </div>
+                            <div class="form-group" style="display: flex; gap: 16px;">
+                                <div style="flex: 1;">
+                                    <label for="leave-start-date">Start Date <span class="required">*</span></label>
+                                    <input type="date" id="leave-start-date" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="leave-end-date">End Date</label>
+                                    <input type="text" id="leave-end-date" readonly placeholder="Calculated automatically" style="background-color: #f1f5f9; cursor: not-allowed;">
+                                </div>
+                            </div>
+                            <div class="form-group" id="doctor-desc-group" style="display: none;">
+                                <label for="doctor-desc">Doctor's Description <span class="required">*</span></label>
+                                <textarea id="doctor-desc" rows="3" placeholder="Required..."></textarea>
+                            </div>
+                            
+                            <!-- PDF Upload for Maternity / Paid Ext -->
+                            <div class="form-group" id="pdf-upload-group" style="display: none;">
+                                <label for="medical-pdf">Upload Medical Certificate (PDF) <span class="required">*</span></label>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" id="medical-pdf" accept=".pdf" class="file-input">
+                                    <div class="file-upload-ui">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span id="file-name-display">Choose a PDF file...</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Simulated AI Verification -->
+                                <div id="ai-verification-box" class="ai-box hidden">
+                                    <div class="ai-loader hidden" id="ai-loader">
+                                        <div class="spinner"></div>
+                                        <span>AI Agent verifying document authenticity...</span>
+                                    </div>
+                                    <div class="ai-result hidden" id="ai-result">
+                                        <!-- Injected by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="primary-btn" id="submit-leave-btn">Submit Application</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <h3>Recent Leave Applications</h3>
+                    <ul id="leave-history" class="history-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- IT Services Section -->
+            <section id="it-services" class="content-section">
+                <div class="grid-container">
+                    <div class="card">
+                        <h3><i class="fa-solid fa-laptop-medical"></i> Order a Laptop</h3>
+                        <p class="text-muted">Request a new workstation or replacement.</p>
+                        <form id="laptop-form" class="mt-4">
+                            <div class="form-group">
+                                <label for="laptop-type">Model Preference</label>
+                                <select id="laptop-type">
+                                    <option>MacBook Pro 16"</option>
+                                    <option>Dell XPS 15</option>
+                                    <option>ThinkPad X1 Carbon</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="laptop-reason">Reason for Request</label>
+                                <textarea id="laptop-reason" rows="2" required></textarea>
+                            </div>
+                            <button type="submit" class="primary-btn">Submit Request</button>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fa-solid fa-id-card"></i> Apply for ID Card</h3>
+                        <p class="text-muted">Request a new or replacement physical ID card for office access.</p>
+                        <form id="id-card-form" class="mt-4">
+                            <div class="form-group">
+                                <label>Delivery Method</label>
+                                <div class="radio-group">
+                                    <label><input type="radio" name="delivery" value="pickup" checked> Pickup at Front Desk</label>
+                                    <label><input type="radio" name="delivery" value="mail"> Mail to Home Address</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="primary-btn">Apply Now</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Performance Section -->
+            <section id="performance" class="content-section">
+                <div class="grid-container">
+                    <div class="card rating-card">
+                        <h3><i class="fa-solid fa-chart-line"></i> Overall Performance</h3>
+                        <div class="rating-display">
+                            <span id="rating-score" class="score"></span>
+                            <div class="stars" id="rating-stars">
+                                <!-- Stars JS -->
+                            </div>
+                        </div>
+                        <p class="text-muted mt-2">Projects Completed: <strong id="completed-projects"></strong></p>
+                    </div>
+
+                    <div class="card project-card">
+                        <h3><i class="fa-solid fa-tasks"></i> Current Project</h3>
+                        <div class="project-details mt-4">
+                            <h4 id="project-name" class="text-xl font-bold"></h4>
+                            <p class="text-muted mt-1"><i class="fa-regular fa-clock"></i> Deadline: <span id="project-deadline"></span></p>
+                            
+                            <div class="progress-container mt-4">
+                                <div class="progress-header">
+                                    <span>Work Progress</span>
+                                    <span id="project-progress-text"></span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div id="project-progress-bar" class="progress-bar-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- HR Request Modal (Phase 2) -->
+    <div id="hr-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3><i class="fa-solid fa-envelope-open-text" style="color: var(--primary);"></i> Request HR Extension</h3>
+            <p class="text-muted mt-2">You have insufficient leave balance for this request. You can mail HR to request an exception.</p>
+            
+            <form id="hr-request-form" class="mt-4">
+                <input type="hidden" id="hr-req-type">
+                <input type="hidden" id="hr-req-days">
+                
+                <div class="form-group">
+                    <label>Reason for Request <span class="required">*</span></label>
+                    <select id="hr-req-reason" required>
+                        <option value="">Select a reason...</option>
+                        <option value="Health Issue">Health Issue / Medical</option>
+                        <option value="Marriage">Marriage</option>
+                        <option value="Family Function">Family Function</option>
+                        <option value="Accident">Accident / Emergency</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Additional Details <span class="required">*</span></label>
+                    <textarea id="hr-req-details" rows="3" required placeholder="Explain your situation briefly..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn" id="close-modal-btn">Cancel</button>
+                    <button type="submit" class="primary-btn"><i class="fa-solid fa-paper-plane"></i> Send Request to HR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
