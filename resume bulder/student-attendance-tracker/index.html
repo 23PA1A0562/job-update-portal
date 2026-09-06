@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance Tracker · Live Website & Dashboard</title>
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .brand h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-title {
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        /* Controls Section */
+        .controls-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .date-picker-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .date-picker-group label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input[type="date"], input[type="text"], input[type="email"] {
+            background: #0f172a;
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: #334155;
+            color: var(--text-main);
+        }
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .btn-danger:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Table */
+        .table-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        .table-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: #1e293b;
+            padding: 0.9rem 1.25rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+            font-size: 0.925rem;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-eligible {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-defaulter {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Toggle Buttons */
+        .status-toggle-group {
+            display: inline-flex;
+            background: #0f172a;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .status-btn {
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .status-btn.active-present {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-btn.active-absent {
+            background: var(--danger);
+            color: white;
+        }
+
+        .status-btn.active-late {
+            background: var(--warning);
+            color: #0f172a;
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1e293b;
+            border: 1px solid var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1000;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            padding: 1.75rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-box h3 {
+            margin-bottom: 1.25rem;
+            font-size: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .form-group input {
+            width: 100%;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand">
+                <h1>🎓 Student Attendance Tracker</h1>
+                <p>Academic Project · Interactive Attendance Management & Defaulter Analytics</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="openAddStudentModal()">+ Add Student</button>
+                <button class="btn btn-secondary" onclick="loadSampleDemoData()">⚡ Load Demo</button>
+                <button class="btn btn-secondary" onclick="exportAttendanceCSV()">📁 Export CSV</button>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">Total Enrolled</div>
+                <div class="stat-value" id="stat-total" style="color: #6366f1;">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Recorded Sessions</div>
+                <div class="stat-value" id="stat-sessions" style="color: #38bdf8;">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Eligible (≥ 75%)</div>
+                <div class="stat-value" id="stat-eligible" style="color: var(--success);">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Defaulters (&lt; 75%)</div>
+                <div class="stat-value" id="stat-defaulters" style="color: var(--danger);">0</div>
+            </div>
+        </div>
+
+        <!-- Attendance Controls -->
+        <div class="controls-card">
+            <div class="date-picker-group">
+                <label for="session-date">📅 Active Session Date:</label>
+                <input type="date" id="session-date" onchange="onDateChange()">
+            </div>
+            <div>
+                <button class="btn btn-success" onclick="saveActiveAttendance()">💾 Save Date Attendance</button>
+            </div>
+        </div>
+
+        <!-- Student Attendance Table -->
+        <div class="table-card">
+            <div class="table-header">
+                <h3>📋 Enrolled Students & Live Attendance</h3>
+                <span id="date-indicator" style="font-size: 0.85rem; color: var(--text-muted);"></span>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Roll Number</th>
+                            <th>Student Name</th>
+                            <th>Batch</th>
+                            <th>Status Today</th>
+                            <th>Total Classes</th>
+                            <th>Attended</th>
+                            <th>Attendance %</th>
+                            <th>Eligibility</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-tbody">
+                        <tr>
+                            <td colspan="9" style="text-align:center; color: var(--text-muted); padding: 2rem;">Loading student data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Student -->
+    <div class="modal-backdrop" id="add-modal">
+        <div class="modal-box">
+            <h3>Add New Student</h3>
+            <form id="add-student-form" onsubmit="submitNewStudent(event)">
+                <div class="form-group">
+                    <label for="new-roll">Student ID / Roll No *</label>
+                    <input type="text" id="new-roll" placeholder="e.g. 23PA1A0507" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-name">Full Name *</label>
+                    <input type="text" id="new-name" placeholder="e.g. Priya Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-batch">Batch / Section</label>
+                    <input type="text" id="new-batch" value="CSE-A">
+                </div>
+                <div class="form-group">
+                    <label for="new-email">Email Address</label>
+                    <input type="email" id="new-email" placeholder="priya@example.edu">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddStudentModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"></div>
+
+    <script>
+        // Storage Keys
+        const STORAGE_KEY_STUDENTS = "sat_students_v1";
+        const STORAGE_KEY_ATTENDANCE = "sat_attendance_v1";
+
+        let students = [];
+        let attendance = {}; // { "YYYY-MM-DD": { "23PA1A0501": "Present" } }
+        let currentSessionAttendance = {};
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const today = new Date().toISOString().split("T")[0];
+            document.getElementById("session-date").value = today;
+            loadData();
+            refreshView();
+        });
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.style.borderColor = isError ? "var(--danger)" : "var(--success)";
+            toast.style.display = "block";
+            setTimeout(() => { toast.style.display = "none"; }, 3500);
+        }
+
+        function loadData() {
+            try {
+                const savedStudents = localStorage.getItem(STORAGE_KEY_STUDENTS);
+                const savedAttendance = localStorage.getItem(STORAGE_KEY_ATTENDANCE);
+                if (savedStudents) {
+                    students = JSON.parse(savedStudents);
+                } else {
+                    // Pre-load default sample students if empty
+                    students = [
+                        { student_id: "23PA1A0501", name: "Aarav Sharma", batch: "CSE-A", email: "aarav@example.edu" },
+                        { student_id: "23PA1A0502", name: "Bhavya Reddy", batch: "CSE-A", email: "bhavya@example.edu" },
+                        { student_id: "23PA1A0503", name: "Chirag Verma", batch: "CSE-B", email: "chirag@example.edu" },
+                        { student_id: "23PA1A0504", name: "Divya Patel", batch: "CSE-B", email: "divya@example.edu" },
+                        { student_id: "23PA1A0505", name: "Eshwar Rao", batch: "CSE-A", email: "eshwar@example.edu" },
+                        { student_id: "23PA1A0506", name: "Farhan Khan", batch: "CSE-B", email: "farhan@example.edu" }
+                    ];
+                    localStorage.setItem(STORAGE_KEY_STUDENTS, JSON.stringify(students));
+                }
+
+                if (savedAttendance) {
+                    attendance = JSON.parse(savedAttendance);
+                } else {
+                    // Seed historical records
+                    seedHistoricalAttendance();
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function seedHistoricalAttendance() {
+            const today = new Date();
+            attendance = {};
+            for (let i = 5; i >= 1; i--) {
+                const d = new Date(today);
+                d.setDate(d.getDate() - i);
+                const dateKey = d.toISOString().split("T")[0];
+                attendance[dateKey] = {
+                    "23PA1A0501": "Present",
+                    "23PA1A0502": i % 2 === 0 ? "Late" : "Present",
+                    "23PA1A0503": "Absent",
+                    "23PA1A0504": "Present",
+                    "23PA1A0505": i > 3 ? "Absent" : "Present",
+                    "23PA1A0506": "Absent"
+                };
+            }
+            saveAttendanceToStorage();
+        }
+
+        function saveStudentsToStorage() {
+            localStorage.setItem(STORAGE_KEY_STUDENTS, JSON.stringify(students));
+        }
+
+        function saveAttendanceToStorage() {
+            localStorage.setItem(STORAGE_KEY_ATTENDANCE, JSON.stringify(attendance));
+        }
+
+        function calculateStats() {
+            const dateKeys = Object.keys(attendance);
+            const totalSessions = dateKeys.length;
+            let eligibleCount = 0;
+            let defaulterCount = 0;
+
+            const studentStats = students.map(s => {
+                let present = 0;
+                let late = 0;
+                let absent = 0;
+                let sessionsCount = 0;
+
+                dateKeys.forEach(dk => {
+                    const status = attendance[dk][s.student_id];
+                    if (status) {
+                        sessionsCount++;
+                        if (status === "Present") present++;
+                        else if (status === "Late") late++;
+                        else if (status === "Absent") absent++;
+                    }
+                });
+
+                const effectivePresent = present + (0.5 * late);
+                const pct = sessionsCount > 0 ? (effectivePresent / sessionsCount) * 100 : 0;
+                const isEligible = sessionsCount === 0 || pct >= 75.0;
+
+                if (sessionsCount > 0) {
+                    if (isEligible) eligibleCount++;
+                    else defaulterCount++;
+                }
+
+                return {
+                    ...s,
+                    total_sessions: sessionsCount,
+                    present_count: present,
+                    late_count: late,
+                    absent_count: absent,
+                    effective_present: effectivePresent,
+                    percentage: pct,
+                    is_eligible: isEligible
+                };
+            });
+
+            return {
+                total_students: students.length,
+                total_sessions: totalSessions,
+                eligible_count: eligibleCount,
+                defaulter_count: defaulterCount,
+                studentStats: studentStats
+            };
+        }
+
+        function refreshView() {
+            const selectedDate = document.getElementById("session-date").value;
+            document.getElementById("date-indicator").textContent = `Marking session for: ${selectedDate}`;
+
+            const statsData = calculateStats();
+            document.getElementById("stat-total").textContent = statsData.total_students;
+            document.getElementById("stat-sessions").textContent = statsData.total_sessions;
+            document.getElementById("stat-eligible").textContent = statsData.eligible_count;
+            document.getElementById("stat-defaulters").textContent = statsData.defaulter_count;
+
+            // Load or initialize attendance for selected date
+            currentSessionAttendance = attendance[selectedDate] ? { ...attendance[selectedDate] } : {};
+            students.forEach(s => {
+                if (!currentSessionAttendance[s.student_id]) {
+                    currentSessionAttendance[s.student_id] = "Present";
+                }
+            });
+
+            // Render table
+            const tbody = document.getElementById("students-tbody");
+            tbody.innerHTML = "";
+
+            if (statsData.studentStats.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color: var(--text-muted); padding: 2rem;">No students found. Click '+ Add Student'.</td></tr>`;
+                return;
+            }
+
+            statsData.studentStats.forEach(s => {
+                const tr = document.createElement("tr");
+                const currentStatus = currentSessionAttendance[s.student_id] || "Present";
+
+                const badgeHtml = s.total_sessions === 0
+                    ? `<span class="badge" style="background:#334155; color:#cbd5e1;">New</span>`
+                    : (s.is_eligible 
+                        ? `<span class="badge badge-eligible">Eligible</span>` 
+                        : `<span class="badge badge-defaulter">Shortage (&lt;75%)</span>`);
+
+                tr.innerHTML = `
+                    <td><strong>${s.student_id}</strong></td>
+                    <td>${s.name}</td>
+                    <td>${s.batch}</td>
+                    <td>
+                        <div class="status-toggle-group">
+                            <button type="button" class="status-btn ${currentStatus === 'Present' ? 'active-present' : ''}" onclick="setStatus('${s.student_id}', 'Present')">P</button>
+                            <button type="button" class="status-btn ${currentStatus === 'Late' ? 'active-late' : ''}" onclick="setStatus('${s.student_id}', 'Late')">L</button>
+                            <button type="button" class="status-btn ${currentStatus === 'Absent' ? 'active-absent' : ''}" onclick="setStatus('${s.student_id}', 'Absent')">A</button>
+                        </div>
+                    </td>
+                    <td>${s.total_sessions}</td>
+                    <td>${s.effective_present}</td>
+                    <td><strong>${s.percentage.toFixed(1)}%</strong></td>
+                    <td>${badgeHtml}</td>
+                    <td>
+                        <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="deleteStudent('${s.student_id}')">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function setStatus(studentId, status) {
+            currentSessionAttendance[studentId] = status;
+            refreshView();
+        }
+
+        function onDateChange() {
+            refreshView();
+        }
+
+        function saveActiveAttendance() {
+            const selectedDate = document.getElementById("session-date").value;
+            if (!selectedDate) {
+                showToast("Please pick a valid date", true);
+                return;
+            }
+
+            attendance[selectedDate] = { ...currentSessionAttendance };
+            saveAttendanceToStorage();
+            showToast(`Attendance saved for ${selectedDate}!`);
+            refreshView();
+        }
+
+        function deleteStudent(studentId) {
+            if (!confirm(`Are you sure you want to delete student ${studentId}?`)) return;
+
+            students = students.filter(s => s.student_id !== studentId);
+            Object.keys(attendance).forEach(d => {
+                delete attendance[d][studentId];
+            });
+
+            saveStudentsToStorage();
+            saveAttendanceToStorage();
+            showToast(`Student ${studentId} deleted.`);
+            refreshView();
+        }
+
+        function openAddStudentModal() {
+            document.getElementById("add-modal").style.display = "flex";
+        }
+
+        function closeAddStudentModal() {
+            document.getElementById("add-modal").style.display = "none";
+            document.getElementById("add-student-form").reset();
+        }
+
+        function submitNewStudent(e) {
+            e.preventDefault();
+            const s_id = document.getElementById("new-roll").value.trim().toUpperCase();
+            const name = document.getElementById("new-name").value.trim();
+            const batch = document.getElementById("new-batch").value.trim().toUpperCase();
+            const email = document.getElementById("new-email").value.trim().toLowerCase();
+
+            if (students.some(s => s.student_id === s_id)) {
+                showToast(`Student with ID '${s_id}' already exists!`, true);
+                return;
+            }
+
+            students.push({ student_id: s_id, name, batch, email });
+            saveStudentsToStorage();
+            closeAddStudentModal();
+            showToast(`Student ${name} added successfully!`);
+            refreshView();
+        }
+
+        function loadSampleDemoData() {
+            seedHistoricalAttendance();
+            showToast("Demo data reloaded!");
+            refreshView();
+        }
+
+        function exportAttendanceCSV() {
+            const statsData = calculateStats();
+            let csv = "Student ID,Full Name,Batch,Total Sessions,Present,Absent,Late,Attendance %,Status\n";
+
+            statsData.studentStats.forEach(s => {
+                const status = s.total_sessions === 0 ? "New" : (s.is_eligible ? "Eligible" : "Defaulter (<75%)");
+                csv += `"${s.student_id}","${s.name}","${s.batch}",${s.total_sessions},${s.present_count},${s.absent_count},${s.late_count},"${s.percentage.toFixed(1)}%","${status}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `attendance_summary_${new Date().toISOString().split("T")[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast("CSV report downloaded!");
+        }
+    </script>
+</body>
+</html>
