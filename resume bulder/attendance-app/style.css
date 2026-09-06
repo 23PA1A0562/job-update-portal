@@ -1,0 +1,187 @@
+:root {
+    --primary-color: #4F46E5;
+    --primary-hover: #4338CA;
+    --success-color: #10B981;
+    --danger-color: #EF4444;
+    --bg-color: #F3F4F6;
+    --card-bg: #FFFFFF;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+    --border-color: #E5E7EB;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.container {
+    background-color: var(--card-bg);
+    max-width: 800px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    color: var(--text-secondary);
+}
+
+.add-student-section {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+#student-form {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 700px;
+}
+
+#student-name, #student-regd {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#student-name:focus, #student-regd:focus {
+    border-color: var(--primary-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: #F9FAFB;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-pending {
+    background-color: #FEF3C7;
+    color: #D97706;
+}
+
+.status-present {
+    background-color: #D1FAE5;
+    color: #047857;
+}
+
+.status-absent {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+}
+
+.action-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-present, .btn-absent, .btn-delete {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    font-weight: 500;
+}
+
+.btn-present {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-absent {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-delete {
+    background-color: #6B7280;
+    color: white;
+}
+
+.btn-present:hover, .btn-absent:hover, .btn-delete:hover {
+    opacity: 0.8;
+}
+
+.summary {
+    display: flex;
+    justify-content: space-around;
+    background-color: #F9FAFB;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.summary span {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}

@@ -1,0 +1,38 @@
+{
+    "23PA1A0501": {
+        "student_id": "23PA1A0501",
+        "name": "Aarav Sharma",
+        "batch": "CSE-A",
+        "email": "aarav.sharma@example.edu"
+    },
+    "23PA1A0502": {
+        "student_id": "23PA1A0502",
+        "name": "Bhavya Reddy",
+        "batch": "CSE-A",
+        "email": "bhavya.reddy@example.edu"
+    },
+    "23PA1A0503": {
+        "student_id": "23PA1A0503",
+        "name": "Chirag Verma",
+        "batch": "CSE-B",
+        "email": "chirag.verma@example.edu"
+    },
+    "23PA1A0504": {
+        "student_id": "23PA1A0504",
+        "name": "Divya Patel",
+        "batch": "CSE-B",
+        "email": "divya.patel@example.edu"
+    },
+    "23PA1A0505": {
+        "student_id": "23PA1A0505",
+        "name": "Eshwar Rao",
+        "batch": "CSE-A",
+        "email": "eshwar.rao@example.edu"
+    },
+    "23PA1A0506": {
+        "student_id": "23PA1A0506",
+        "name": "Farhan Khan",
+        "batch": "CSE-B",
+        "email": "farhan.khan@example.edu"
+    }
+}

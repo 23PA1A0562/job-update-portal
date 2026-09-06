@@ -1,0 +1,7 @@
+Student ID,Full Name,Batch,Total Sessions,Present,Absent,Late,Attendance %,Defaulter (<75%)
+23PA1A0501,Aarav Sharma,CSE-A,5,5,0,0,100.0%,NO
+23PA1A0502,Bhavya Reddy,CSE-A,5,4,0,1,90.0%,NO
+23PA1A0503,Chirag Verma,CSE-B,5,1,4,0,20.0%,YES
+23PA1A0504,Divya Patel,CSE-B,5,4,0,1,90.0%,NO
+23PA1A0505,Eshwar Rao,CSE-A,5,3,1,1,70.0%,YES
+23PA1A0506,Farhan Khan,CSE-B,5,1,4,0,20.0%,YES

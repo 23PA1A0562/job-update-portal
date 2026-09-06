@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Attendance Tracker</h1>
+            <p>Manage daily student attendance easily.</p>
+        </header>
+
+        <section class="add-student-section">
+            <form id="student-form">
+                <input type="text" id="student-name" placeholder="Enter student name..." required>
+                <input type="text" id="student-regd" placeholder="e.g. 23pa1a0789" required>
+                <button type="submit" class="btn-primary">Add Student</button>
+            </form>
+        </section>
+
+        <section class="attendance-section">
+            <div class="table-container">
+                <table id="attendance-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Regd No.</th>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-list">
+                        <!-- Student rows will be injected here by JS -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="summary">
+                <p>Total Students: <span id="total-students">0</span></p>
+                <p>Present: <span id="present-students">0</span></p>
+                <p>Absent: <span id="absent-students">0</span></p>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

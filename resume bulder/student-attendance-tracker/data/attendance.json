@@ -1,0 +1,42 @@
+{
+    "2026-08-31": {
+        "23PA1A0501": "Present",
+        "23PA1A0502": "Present",
+        "23PA1A0503": "Absent",
+        "23PA1A0504": "Present",
+        "23PA1A0505": "Late",
+        "23PA1A0506": "Absent"
+    },
+    "2026-09-01": {
+        "23PA1A0501": "Present",
+        "23PA1A0502": "Present",
+        "23PA1A0503": "Absent",
+        "23PA1A0504": "Present",
+        "23PA1A0505": "Present",
+        "23PA1A0506": "Absent"
+    },
+    "2026-09-02": {
+        "23PA1A0501": "Present",
+        "23PA1A0502": "Late",
+        "23PA1A0503": "Absent",
+        "23PA1A0504": "Present",
+        "23PA1A0505": "Present",
+        "23PA1A0506": "Absent"
+    },
+    "2026-09-03": {
+        "23PA1A0501": "Present",
+        "23PA1A0502": "Present",
+        "23PA1A0503": "Present",
+        "23PA1A0504": "Late",
+        "23PA1A0505": "Absent",
+        "23PA1A0506": "Present"
+    },
+    "2026-09-04": {
+        "23PA1A0501": "Present",
+        "23PA1A0502": "Present",
+        "23PA1A0503": "Absent",
+        "23PA1A0504": "Present",
+        "23PA1A0505": "Present",
+        "23PA1A0506": "Absent"
+    }
+}
